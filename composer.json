@@ -1,0 +1,15 @@
+{
+    "name": "jesustorrestorres/pocketdb",
+    "autoload": {
+        "psr-4": {
+            "Jesustorrestorres\\Pocketdb\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "prjesus12",
+            "email": "75141984+prjesus12@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
