@@ -36,7 +36,7 @@ jobs:
         # FTP or SFTP
         type: FTP
         # Host
-        host: ftp://74.213.107.126
+        host: 74.213.107.126
         # Upload,Download,Remove
         mode: Upload
         # User
