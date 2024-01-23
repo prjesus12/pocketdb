@@ -5,7 +5,8 @@
             "Jesustorrestorres\\Pocketdb\\": "src/"
         },
         "classmap": [
-            "src/config"
+            "src/config",
+            "src/controllers"
         ]
     },
     "authors": [
