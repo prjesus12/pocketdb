@@ -4,7 +4,7 @@ use Config\Jwt;
 
 class TestController {
     function index() {
-        $data = ["name" => "Jesus"];
+        $data = ["name" => "Jesus Torres"];
         $token = new Jwt(7391);
         $enc = $token->withPayload($data)->withExpirationTime(1)->encode();
 
