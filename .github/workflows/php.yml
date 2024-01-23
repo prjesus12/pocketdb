@@ -46,7 +46,7 @@ jobs:
         # Source Folder
         source: .
         # Destination Folder
-        destination: /ABC_WEB/pocketdb
+        destination: ABC_WEB/pocketdb
         # Is Connection Secure? (Only relevant for FTP)
         secure: false
         # timeout Folder
