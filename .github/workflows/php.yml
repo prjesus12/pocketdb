@@ -44,7 +44,7 @@ jobs:
         # Password
         password: Abc1234@server
         # Source Folder
-        
+        source: .
         # Destination Folder
         destination: /ABC_WEB/pocketdb
         # Is Connection Secure? (Only relevant for FTP)
