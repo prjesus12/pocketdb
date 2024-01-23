@@ -30,25 +30,24 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
       
-    - name: FTP Deployer
+    - name: FTP Mirror
       # You may pin to the exact commit or the version.
-      # uses: sand4rt/ftp-deployer@b0fc0a8e0336dddf2192e4415062ad00bd533cba
-      uses: sand4rt/ftp-deployer@v1.7
+      # uses: modern-dev/ftp-mirror@700ec6b399f45cbd58572085856c6fe2114c8342
+      uses: modern-dev/ftp-mirror@v2
       with:
-
-        # FTP host URL like: ftp.host.com or sftp.host.com
-        host: ftp://74.213.107.126
-
-        # FTP port
-        port: 21
-        # Ftp username
-        username: Administrator
-        # Ftp password
+        # FTP Server.
+        server: 74.213.107.126
+        # FTP User.
+        user: Administrator
+        # FTP Password.
         password: Abc1234@server
-        # The remote folder location of your FTP server
-        remote_folder: ABC_WEB/pocketdb
-        # The local folder location
-        local_folder: .
+        # Local directory.
+        local_dir: ./
+        # Remote directory.
+        remote_dir: ABC_WEB/pocketdb
+        # Delete all the files inside of the remote directory.
+        delete: false
+              
         
           
           
