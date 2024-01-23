@@ -1,8 +1,17 @@
 <?php
 namespace Controllers;
+use Config\Jwt;
 
 class TestController {
     function index() {
-        return ["name" => "Jesus"];
+        $data = ["name" => "Jesus"];
+        $token = new Jwt(7391);
+        $enc = $token->withPayload($data)->withExpirationTime(1)->encode();
+
+        $dec = $token->verify($enc);
+        return [
+            "encoded" => $enc,
+            "decoded" => $dec
+        ];
     }
 }
