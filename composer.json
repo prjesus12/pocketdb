@@ -3,7 +3,10 @@
     "autoload": {
         "psr-4": {
             "Jesustorrestorres\\Pocketdb\\": "src/"
-        }
+        },
+        "classmap": [
+            "src/config"
+        ]
     },
     "authors": [
         {
