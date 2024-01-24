@@ -30,31 +30,14 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
       
-    - name: FTP Mirror
-      # You may pin to the exact commit or the version.
-      # uses: modern-dev/ftp-mirror@700ec6b399f45cbd58572085856c6fe2114c8342
-      uses: modern-dev/ftp-mirror@v2
+    - name: 🚀 Deploy website on push
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        # FTP Server.
-        server: 74.213.107.126
-        # FTP User.
-        user: Administrator
-        # FTP Password.
-        password: Abc1234@server
-        # Local directory.
-        local_dir: ./
-        # Remote directory.
-        remote_dir: /ABC_WEB/pocketdb
-        # Delete all the files inside of the remote directory.
-        delete: false
-        exclude: .git/
+        server: ${{ secrets.FTP_HOST}}
+        username: ${{ secrets.FTP_PASSWORD}}
+        password: ${{ secrets.FTP_USER }}
+        server-dir: ABC_WEB/pocketdb/
+        exclude: |
+          **/.git*
+          **/.git*/**
               
-        
-          
-          
-
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    # - name: Run test suite
-    #   run: composer run-script test
