@@ -5,13 +5,15 @@ on:
     branches: 
       - production
     types: closed
+  push: 
+    branches: 
+      - production
     
 permissions:
   contents: read
 
 jobs:
   build:
-    if: ${{github.event.pull_request.merged}}
     runs-on: ubuntu-latest
 
     steps:
