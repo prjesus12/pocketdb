@@ -29,6 +29,9 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
+      
+      - name: Show Password
+        run: echo ${{vars.FTP_PASSWORD}}
 
       - name: 🚀 Deploy website on push
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
