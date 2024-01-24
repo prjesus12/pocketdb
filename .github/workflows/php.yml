@@ -1,43 +1,43 @@
 name: PHP Composer
 
 on:
-  pull_request: 
-    branches: 
+  pull_request:
+    branches:
       - production
     types: closed
-    
+  push:
+    branches:
+      - production
+
 permissions:
   contents: read
 
 jobs:
   build:
-    if: ${{github.event.pull_request.merged}}
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
 
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+    
+      - name: 🚀 Deploy website on push
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ vars.FTP_HOST }}
+          username: ${{vars.FTP_USER}}
+          password: ${{vars.FTP_PASSWORD}}
+          server-dir: ${{vars.FTP_DIR}}
+          exclude: |
+            **/.git*
+            **/.git*/**
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
-
-      
-    - name: 🚀 Deploy website on push
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: ${{ secrets.FTP_HOST}}
-        username: ${{ secrets.FTP_PASSWORD}}
-        password: ${{ secrets.FTP_USER }}
-        server-dir: ABC_WEB/pocketdb/
-        exclude: |
-          **/.git*
-          **/.git*/**
-              
