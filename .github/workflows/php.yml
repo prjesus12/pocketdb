@@ -29,20 +29,14 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
-      
-      - name: Show Host
-        run: echo ${{vars.FTP_HOST}}
-      
-      - name: Show Password
-        run: echo ${{vars.FTP_PASSWORD}}
-
+    
       - name: 🚀 Deploy website on push
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ vars.FTP_HOST }}
-          username: Administrator
-          password: Abc1234@server
-          server-dir: ABC_WEB/pocketdb/
+          username: ${{vars.FTP_USER}}
+          password: ${{vars.FTP_PASSWORD}}
+          server-dir: ${{vars.FTP_DIR}}
           exclude: |
             **/.git*
             **/.git*/**
