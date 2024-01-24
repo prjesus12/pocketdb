@@ -6,6 +6,6 @@ use Config\SqlBuilder;
 
 class TestController {
     function index() {
-        return Randomizer::randomChars(16);
+        return $_ENV;
     }
 }
