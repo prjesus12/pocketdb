@@ -1,5 +1,5 @@
 <?php
-use Config\Response;
+
 use Config\Router;
 require 'vendor/autoload.php';
 
