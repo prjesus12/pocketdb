@@ -21,13 +21,10 @@ class Router {
     }
 
     function run() {
-        // return Response::parseResponse( $_SERVER);
-        $api = explode("api",$_SERVER['REDIRECT_URL']);
-        
-        $path = $api[1];
-        $this->validateRoute($path);
+      
+        $this->validateRoute( $_SERVER['PATH_INFO']);
 
-        $current = $this->routes[$path];
+        $current = $this->routes[ $_SERVER['PATH_INFO']];
         $action = $current['action'];
         $controller = new $current['controller']();
         
