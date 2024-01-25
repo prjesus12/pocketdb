@@ -13,13 +13,18 @@ class Router {
 
     private function validateRoute($path) {
         if(isset($this->routes[$path]) == false){
-            throw new \Exception("404 missing route", 0);
+            die(Response::parseResponse([
+                "status" => 404,
+                "message" => "Route not found"
+            ]));
         }
     }
 
     function run() {
-        $path = $_SERVER['PATH_INFO'];
-
+        // return Response::parseResponse( $_SERVER);
+        $api = explode("api",$_SERVER['REDIRECT_URL']);
+        
+        $path = $api[1];
         $this->validateRoute($path);
 
         $current = $this->routes[$path];
