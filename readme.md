@@ -10,6 +10,7 @@ A extensible php mini framework inspired on pocketbase.
 - Easy api use
 - Make it yours
 - Cross platform
+- Docker mini configuration
 
 
 ## Installation
@@ -18,6 +19,7 @@ Create an .env file with this:
 
 ```bash
 ACCESS_TOKEN={anykey}
+DB_NAME=database.sqlite
 ```
 
 ## Guide
@@ -47,4 +49,5 @@ composer dump-autoload
     ```bash
     http://localhost:8000/index.php?_c=QueryController&_a=select
     ```
+-  More coming soon....
     
