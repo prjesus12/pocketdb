@@ -29,9 +29,6 @@ Each time that you create a controller or config folders you should run this:
 composer dump-autoload
 ```
 
-```bash
-ACCESS_TOKEN={anykey}
-```
     
 ## Routes
 
