@@ -20,11 +20,37 @@ class Sqlsrv {
         while($row = \sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
             $data[] = $row;
         }
+        sqlsrv_close($this->conn);
         return $data;
     }
-    function first($query) {
-        $stmt = \sqlsrv_query($this->conn, $query);
 
-        return sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+    private function run($query){
+        $result = \sqlsrv_query($this->conn, $query);
+        return $result;
+    }
+
+    function create($query) {
+        return $this->run($query);
+    }
+
+    function update($query) {
+        return $this->run($query);
+    }
+
+    function delete($query) {
+        return $this->run($query);
+    }
+
+    function first($query) {
+        $stmt = $this->run($query);
+       
+        if ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+            sqlsrv_close($this->conn);
+            return (object)$row;
+        } else {
+            sqlsrv_close($this->conn);
+            return [];
+        }
+        
     }
 }

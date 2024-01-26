@@ -14,8 +14,12 @@ class TestController
     {
         $sql = new SqlBuilder();
 
-        $sql->select("*", "ABC_Users");
+        $sql->select("*", "Company_iGas");
 
-        return Database::default()->get($sql->build());
+        $f = Database::default()->first($sql->build());
+
+        $db = Database::custom($f->Instancia, $f->Base_Datos, $f->Instancia_user, $f->Instancia_pass);
+
+        return $db->get((new SqlBuilder())->select("Nombre", "Pueblos")->build());
     }
 }
