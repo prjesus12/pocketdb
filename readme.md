@@ -19,6 +19,19 @@ Create an .env file with this:
 ```bash
 ACCESS_TOKEN={anykey}
 ```
+
+## Guide
+
+Make sure that you have composer installed before using
+
+Each time that you create a controller or config folders you should run this:
+```bash
+composer dump-autoload
+```
+
+```bash
+ACCESS_TOKEN={anykey}
+```
     
 ## Routes
 
