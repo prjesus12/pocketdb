@@ -10,7 +10,7 @@ class TestController
 {
     function index()
     {
-        $connectionInfo = array("Database" => "ABC_DATOS", "UID" => "abc", "PWD" => "1234@sqltest", "Encrypt" => false);
+        $connectionInfo = array("Database" => "ABC_DATOS", "UID" => "abc", "PWD" => "1234@sqltest", "Encrypt" => false, "CharacterSet" => "UTF-8");
         $conn = sqlsrv_connect("74.213.107.126,49164", $connectionInfo);
         
         if(!$conn) {
