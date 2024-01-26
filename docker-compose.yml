@@ -1,0 +1,19 @@
+version: '3'
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/var/www/html
+
+  composer:
+    image: composer:latest
+    volumes:
+      - ./:/var/www/html
+    working_dir: /var/www/html
+    command: ["install"]
+    depends_on:
+      - php

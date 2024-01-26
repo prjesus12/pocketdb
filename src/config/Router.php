@@ -2,31 +2,42 @@
 namespace Config;
 
 class Router {
-    private $routes = [];
+    
+   
 
-    function add($path, $controller, $action) {
-        $this->routes[$path] = [
-            "controller" => "Controllers\\$controller",
-            "action" => $action
-        ];
+    private function validateController() {
+        if(isset($_GET['_c']) == false){
+            die("Mising _c parameter");
+        }
     }
-
-    private function validateRoute($path) {
-        if(isset($this->routes[$path]) == false){
-            die(Response::parseResponse([
-                "status" => 404,
-                "message" => "Route not found"
-            ]));
+    private function validateAction() {
+        if(isset($_GET['_a']) == false){
+            die("Mising _a parameter");
         }
     }
 
-    function run() {
-      
-        $this->validateRoute( $_SERVER['PATH_INFO']);
+    private function verifyController($class){
+        if(class_exists("Controllers\\$class") == false){
+            die("Mising controller");
+        }
+    }
+    private function verifyMethod($class, $method){
+        if(method_exists("Controllers\\$class", $method) == false){
+            die("Mising method");
+        }
+    }
+  
 
-        $current = $this->routes[ $_SERVER['PATH_INFO']];
-        $action = $current['action'];
-        $controller = new $current['controller']();
+    function run() {
+        $this->validateController();
+        $this->validateAction();
+
+        $this->verifyController($_GET["_c"]);
+        $this->verifyMethod($_GET["_c"], $_GET["_a"]);
+
+        $_c = "Controllers\\$_GET[_c]";
+        $action = $_GET['_a'];
+        $controller = new $_c;
         
         return Response::parseResponse($controller->$action());
     }

@@ -7,6 +7,4 @@ include './scripts/readEnv.php';
 
 $router = new Router();
 
-$router->add("/test", "TestController", "index");
-
 echo $router->run();
