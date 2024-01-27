@@ -7,9 +7,9 @@ RUN apt update -y
 RUN apt-get update -y
 RUN apt-get install msodbcsql18 -y
 RUN apt-get install unixodbc-dev -y
-RUN pecl install sqlsrv
-RUN pecl install pdo_sqlsrv
-RUN docker-php-ext-enable sqlsrv pdo_sqlsrv
+# RUN pecl install sqlsrv
+# RUN pecl install pdo_sqlsrv
+# RUN docker-php-ext-enable sqlsrv pdo_sqlsrv
 
 COPY my_custom_config.conf /etc/ssl/openssl.cnf
 
