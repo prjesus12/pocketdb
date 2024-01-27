@@ -40,6 +40,19 @@ class QueryController {
         return $this->db->raw($sq->build());
     }
 
+    function update() {
+        $table = Request::exists("table");
+        $where = Request::exists("where");
+
+        if(isset($_POST['where'])){
+            unset($_POST['where']);
+        }
+        
+
+        return $this->db->update($table, $_POST, $where);
+        
+    }
+
     function insert() {
         $table = Request::exists("table");
         return $this->db->insert($table, $_POST);
