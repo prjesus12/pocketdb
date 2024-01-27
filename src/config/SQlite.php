@@ -2,23 +2,26 @@
 
 namespace Config;
 
-use SQLite3;
+use PDO;
+use PDOException;
 
 class SQlite
 {
     private $db;
     private static $instance;
 
-    function __construct()
+    private function __construct()
     {
-        $this->db = new SQLite3($_ENV['DB_NAME']);
-
-        if (!$this->db) {
-            die("Error connecting to SQLite database");
+        try {
+            $this->db = new PDO('sqlite:' . $_ENV['DB_NAME']);
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die("Error connecting to SQLite database: " . $e->getMessage());
         }
     }
 
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (!self::$instance) {
             self::$instance = new self();
         }
@@ -26,75 +29,89 @@ class SQlite
         return self::$instance;
     }
 
-    function __destruct() {
-        $this->db->close();
+    public function __destruct()
+    {
+        $this->db = null;
     }
 
-    function createTable($tableName, $columns)
+    public function createTable($tableName, $columns)
     {
         $query = "CREATE TABLE IF NOT EXISTS $tableName ($columns)";
         $this->db->exec($query);
     }
 
-    function dropTable($tableName)
+    public function dropTable($tableName)
     {
         $query = "DROP TABLE IF EXISTS $tableName ";
         $this->db->exec($query);
     }
 
-    function alterColumns($tableName, $alterations) {
+    public function alterColumns($tableName, $alterations)
+    {
         foreach ($alterations as $alteration) {
             $this->db->exec("ALTER TABLE $tableName $alteration");
         }
     }
 
-    function insert($tableName, $data)
+    public function insert($tableName, $data)
     {
         $keys = implode(', ', array_keys($data));
-        $values = "'" . implode("', '", array_values($data)) . "'";
+        $values = implode(', ', array_fill(0, count($data), '?'));
+
         $query = "INSERT INTO $tableName ($keys) VALUES ($values)";
-        $this->db->exec($query);
+        $stmt = $this->db->prepare($query);
+
+        $i = 1;
+        foreach ($data as $value) {
+            $stmt->bindValue($i++, $value);
+        }
+
+        $stmt->execute();
     }
 
-    function select($tableName, $condition = null)
+    public function select($tableName, $condition = null)
     {
         $query = "SELECT * FROM $tableName";
         if ($condition) {
             $query .= " WHERE $condition";
         }
-        $result = $this->db->query($query);
-        $rows = [];
-        while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-            $rows[] = $row;
-        }
-        return $rows;
-    }
 
-    function raw($query) {
-        $result = $this->db->query($query);
-        $rows = [];
-        while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-            $rows[] = $row;
-        }
+        $stmt = $this->db->query($query);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $rows;
     }
 
-    function update($tableName, $data, $condition)
+    public function raw($query)
+    {
+        $stmt = $this->db->query($query);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $rows;
+    }
+
+    public function update($tableName, $data, $condition)
     {
         $updates = [];
         foreach ($data as $key => $value) {
-            $updates[] = "$key = '$value'";
+            $updates[] = "$key = ?";
         }
         $updates = implode(', ', $updates);
+
         $query = "UPDATE $tableName SET $updates WHERE $condition";
-        $this->db->exec($query);
+        $stmt = $this->db->prepare($query);
+
+        $i = 1;
+        foreach ($data as $value) {
+            $stmt->bindValue($i++, $value);
+        }
+
+        $stmt->execute();
     }
 
-    function delete($tableName, $condition)
+    public function delete($tableName, $condition)
     {
         $query = "DELETE FROM $tableName WHERE $condition";
         $this->db->exec($query);
     }
-
 }
