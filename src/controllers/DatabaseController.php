@@ -4,8 +4,7 @@ namespace Controllers;
 use Config\Request;
 use Config\Response;
 use Config\SQlite;
-class DatabaseController {
-    private $db;
+class DatabaseController extends Controller {
     
     public function __construct() {
         $token = Request::exists("token");
@@ -20,7 +19,7 @@ class DatabaseController {
         $table = Request::exists("table");
         $fields = Request::exists("fields");
         
-        $this->db->createTable($table, $fields);
+        $this->db()->createTable($table, $fields);
 
         return [
             "message" => "Table created"
@@ -31,7 +30,7 @@ class DatabaseController {
     function dropTable() {
         if(isset($_GET['table']) == false) return "Missing table param";
         
-        $this->db->dropTable($_GET['table']);
+        $this->db()->dropTable($_GET['table']);
 
         return [
             "message" => "Table droped "

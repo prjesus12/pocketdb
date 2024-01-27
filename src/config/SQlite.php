@@ -62,11 +62,11 @@ class SQlite
         $stmt = $this->db->prepare($query);
 
         $i = 1;
-        foreach ($data as $value) {
+        foreach ($data as $key => $value) {
             $stmt->bindValue($i++, $value);
         }
 
-        $stmt->execute();
+        return $stmt->execute();
     }
 
     public function select($tableName, $condition = null)
@@ -106,7 +106,7 @@ class SQlite
             $stmt->bindValue($i++, $value);
         }
 
-        $stmt->execute();
+        return $stmt->execute();
     }
 
     public function delete($tableName, $condition)

@@ -4,11 +4,9 @@ use Config\Request;
 use Config\SqlBuilder;
 use Config\SQlite;
 use Config\Response;
-class QueryController {
-    private $db;
-    public function __construct() {
-        $this->db = SQlite::getInstance();
-    }
+use Controllers\Controller;
+class QueryController extends Controller {
+    
     function select() {
         $cols = Request::if_not_exist_fill("columns", "*");
         $table = Request::exists("table");
@@ -37,6 +35,23 @@ class QueryController {
             $sq->append(" GROUP BY ". $group_by);
         }
 
-        return $this->db->raw($sq->build());
+        return $this->db()->raw($sq->build());
+    }
+
+    function update() {
+        $table = Request::exists("table");
+        $where = Request::exists("where");
+
+        if(isset($_POST['where'])){
+            unset($_POST['where']);
+        }
+  
+        return $this->db()->update($table, $_POST, $where);
+        
+    }
+
+    function insert() {
+        $table = Request::exists("table");
+        return $this->db()->insert($table, $_POST);
     }
 }
