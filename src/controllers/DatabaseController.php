@@ -5,7 +5,7 @@ use Config\Request;
 use Config\Response;
 use Config\SQlite;
 class DatabaseController {
-    private Sqlite $db;
+    private $db;
     
     public function __construct() {
         $token = Request::exists("token");

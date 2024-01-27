@@ -5,7 +5,7 @@ use Config\SqlBuilder;
 use Config\SQlite;
 use Config\Response;
 class QueryController {
-    private Sqlite $db;
+    private $db;
     public function __construct() {
         $this->db = SQlite::getInstance();
     }
