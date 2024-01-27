@@ -39,4 +39,9 @@ class QueryController {
 
         return $this->db->raw($sq->build());
     }
+
+    function insert() {
+        $table = Request::exists("table");
+        return $this->db->insert($table, $_POST);
+    }
 }
