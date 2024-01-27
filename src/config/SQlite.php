@@ -106,7 +106,7 @@ class SQlite
             $stmt->bindValue($i++, $value);
         }
 
-        $stmt->execute();
+        return $stmt->execute();
     }
 
     public function delete($tableName, $condition)
