@@ -25,6 +25,10 @@ class DatabaseController extends Controller {
             "message" => "Table created"
         ];
     }
+
+    function listTables() {
+        return $this->db()->raw("SELECT name FROM sqlite_master WHERE type='table' and name != 'sqlite_sequence'");
+    }
     
 
     function dropTable() {
