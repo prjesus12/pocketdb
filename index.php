@@ -8,4 +8,12 @@ include './scripts/readEnv.php';
 
 $router = new Router();
 
+$router->add("listTables", "DatabaseController", "listTables");
+$router->add("createTable", "DatabaseController", "createTable");
+$router->add("dropTable", "DatabaseController", "dropTable");
+
+$router->add("select", "QueryController", "select");
+$router->add("insert", "QueryController", "insert");
+$router->add("update", "QueryController", "update");
+
 echo $router->run();

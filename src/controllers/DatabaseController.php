@@ -6,15 +6,6 @@ use Config\Response;
 use Config\SQlite;
 class DatabaseController extends Controller {
     
-    public function __construct() {
-        $token = Request::exists("token");
-        if($token != $_ENV['ACCESS_TOKEN']){
-            die("Invalid Token");
-        }
-        $this->db = SQlite::getInstance();
-    }
-
-
     function createTable() {
         $table = Request::exists("table");
         $fields = Request::exists("fields");
